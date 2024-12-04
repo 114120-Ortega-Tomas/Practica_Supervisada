@@ -1,0 +1,232 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading-modal">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+  <div class="row mb-2 ">
+    <div class="col-md-11">
+      <div class="row">
+        <div class="col-md" [ngClass]="{'col-md-7': formFilter.value.abrigo || formFilter.value.accesorio, 'col-md-12': !formFilter.value.abrigo && !formFilter.value.accesorio}">
+          <div id="carousel1" #carousel1 class="carousel slide" data-bs-touch="false" style="height: 30vh; display: flex; justify-content: center; align-items: center;">
+            <div class="carousel-inner">
+              <div class="carousel-item" *ngFor="let prenda of Tops; let i = index" [class.active]="prenda.prendaId === selectedTopId" [attr.data-index]="i">
+                <img [src]="base64toImage(prenda.base64)" class="d-block mx-auto" style="width: auto; height: 12vw; object-fit: cover;">
+              </div>
+            </div>
+            <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-left"></i></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next custom-carousel-control" type="button" data-bs-target="#carousel1" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-right"></i></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>        
+        
+        <div class="col-md-1"></div>
+        <div *ngIf="formFilter.value.abrigo" class="col-md-3" >
+          <div id="carousel4" #carousel4 class="carousel slide" data-bs-touch="false" style="height: 30vh; display: flex; justify-content: center; align-items: center;">
+            <div class="carousel-inner">
+              <div class="carousel-item" *ngFor="let prenda of OuterWear; let i = index" [class.active]="prenda.prendaId === selectedOuterWearId" [attr.data-index]="i">
+                <img [src]="base64toImage(prenda.base64)" class="d-block mx-auto" style="width: auto; height: 12vw; object-fit: cover;">
+              </div>
+            </div>
+            <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#carousel4" data-bs-slide="prev" style="margin-left: -4vw;">
+              <span class="carousel-control-prev-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-left"></i></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next custom-carousel-control" type="button" data-bs-target="#carousel4" data-bs-slide="next" style="margin-right:  -4vw;">
+              <span class="carousel-control-next-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-right"></i></span>
+              <span class="visually-hidden">Next</span>
+            </button>           
+          </div>
+        </div>
+      </div>      
+    </div>
+    
+    <!-- Filter and Save Buttons -->
+    <div class="col-md-1" style="align-items: start; margin-top: 3vh;">
+      <div class="row mt-3">
+        <button (click)="toggleModal()" data-bs-target="#exampleModal" data-bs-toggle="modal" class="form-control" style="background-color: white; border-radius: 5px; width: auto;">
+          <img src="../assets/filter.png" alt="" style="width: 2vw;">
+        </button>
+      </div>
+      <div class="row mt-2">
+        <button (click)="toggleModalSave()" data-bs-target="#exampleModalSave" data-bs-toggle="modal" class="form-control" style="background-color: white; border-radius: 5px; width: auto;">
+          <img src="../assets/check.png" alt="" style="width: 2vw;">
+        </button>
+      </div>
+      <div class="row mt-2">
+        <button (click)="toggleOuterWear()" class="form-control" style="background-color: white; border-radius: 5px; width: auto;">
+          <img src="../assets/abrigo.png" alt="" style="width: 2vw;">
+        </button>
+      </div>
+      <div class="row mt-2">
+        <button (click)="toggleAccesories()"  class="form-control" style="background-color: white; border-radius: 5px; width: auto;">
+          <img src="../assets/lentes.png" alt="" style="width: 2vw;">
+        </button>
+      </div>
+      <div class="row mt-2">
+        <button (click)="ArmarOutfitAleatorio()"  class="form-control" style="background-color: white; border-radius: 5px; width: auto;">
+          <img src="../assets/shuffle.png" alt="" style="width: 2vw;">
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bottoms Carousel -->
+  <div class="row mb-2">
+    <div class="col-md" [ngClass]="{'col-md-6': formFilter.value.abrigo || formFilter.value.accesorio,'col-md-11': !formFilter.value.abrigo && !formFilter.value.accesorio}" > 
+      <div id="carousel2" #carousel2 class="carousel slide" data-bs-touch="false" style="height: 30vh; display: flex; justify-content: center; align-items: center;">
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let prenda of Bottoms; let i = index" [class.active]="prenda.prendaId === selectedBottomId" [attr.data-index]="i">
+            <img [src]="base64toImage(prenda.base64)" class="d-block mx-auto" style="width: auto; height: 12vw; object-fit: cover;">
+          </div>
+        </div>
+        <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-left"></i></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next custom-carousel-control" type="button" data-bs-target="#carousel2" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-right"></i></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+    <div *ngIf="formFilter.value.accesorio && Accesories.length > 0" class="col-md-3" >
+      <div id="carousel5" #carousel5 class="carousel slide" data-bs-touch="false" style="height: 30vh; display: flex; justify-content: center; align-items: center;">
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let prenda of Accesories; let i = index" [class.active]="prenda.prendaId === selectedAccesoriesId" [attr.data-index]="i">
+            <img [src]="base64toImage(prenda.base64)" class="d-block mx-auto" style="width: auto; height: 12vw; object-fit: cover;">
+          </div>
+        </div>
+        <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#carousel5" data-bs-slide="prev" style="margin-left: -4vw;">
+          <span class="carousel-control-prev-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-left"></i></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next custom-carousel-control" type="button" data-bs-target="#carousel5" data-bs-slide="next" style="margin-right:  -4vw;">
+          <span class="carousel-control-next-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-right"></i></span>
+          <span class="visually-hidden">Next</span>
+        </button>           
+      </div>
+    </div>
+  </div>
+  
+  <!-- FootWear Carousel -->
+  <div class="row mb-2">
+    <div class="col-md" [ngClass]="{'col-md-6': formFilter.value.abrigo || formFilter.value.accesorio,'col-md-11': !formFilter.value.abrigo && !formFilter.value.accesorio}" > 
+      <div id="carousel3" #carousel3 class="carousel slide" data-bs-touch="false" style="height: 30vh; display: flex; justify-content: center; align-items: center;">
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let prenda of FootWear; let i = index" [class.active]="prenda.prendaId === selectedFootWearId" [attr.data-index]="i">
+            <img [src]="base64toImage(prenda.base64)" class="d-block mx-auto" style="width: auto; height: 12vw; object-fit: cover;">
+          </div>
+        </div>
+        <button class="carousel-control-prev custom-carousel-control" type="button" data-bs-target="#carousel3" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-left"></i></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next custom-carousel-control" type="button" data-bs-target="#carousel3" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true" style="display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-arrow-right"></i></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals for Filters and Saving Outfit -->
+  <div class="row">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Filters</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="formFilter">
+              <div class="row mb-2">
+                <div class="col-md-12">
+                  <input class="form-check-input" type="checkbox" id="shareCheckbox" formControlName="favorite">
+                  <label style="margin-left: 1vw;margin-top: 0.1vh;" class="form-check-label" for="shareCheckbox">Only Favorited Items</label>
+                </div>
+              </div>             
+              <div class="row mb-2">
+                <div class="col-md-12">
+                  <label for="clima" class="form-label">What Climate are you looking for?</label>
+                        <ng-multiselect-dropdown 
+                            [data]="climas" 
+                            [placeholder]="'Select the Climate/s that suits the best'" 
+                            [settings]="dropdownSettingsClima" 
+                            id="clima" 
+                            formControlName="clima">
+                        </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="row mb-2" >
+                <div class="col-md-12">
+                  <label for="estilo" class="form-label">What Styles do you prefer?</label>
+                        <ng-multiselect-dropdown 
+                            [data]="estilos" 
+                            [placeholder]="'Select the Style/s that suits the best'" 
+                            [settings]="dropdownSettingsEstilos" 
+                            id="estilo" 
+                            formControlName="estilo">
+                        </ng-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md-12">
+                  <label for="color" class="form-label">What Colors do you prefer?</label>
+                  <ng-multiselect-dropdown 
+                            [settings]="dropdownSettingsColors" 
+                            id="color" 
+                            formControlName="color" 
+                            [data]="colores" 
+                            [placeholder]="'Select the Color/s that suits the best'">
+                        </ng-multiselect-dropdown>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" (click)="aplicarFiltros()" data-bs-dismiss="modal">Apply Filters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="exampleModalSave" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">SAVE OUTFIT</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="formSave">
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Name:</label>
+                <input formControlName="nombre" type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Description:</label>
+                <input formControlName="descripcion" type="text" class="form-control" id="recipient-name">
+              </div>
+              <h3 class="pacifico-regular"><u> Items in Outfit</u> </h3>
+              <ul>
+                <li *ngFor="let item of Prendas" >{{item.descripcion}}</li>
+              </ul>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" (click)="saveOutfit()">Save Outfit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

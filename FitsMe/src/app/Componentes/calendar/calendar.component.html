@@ -1,0 +1,250 @@
+<div class="container">
+    <div class="row" style="margin-top: 2vh;">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12" style="text-align:center ;">
+                    <h3 class="pacifico-regular">{{currentMonth}} - {{currentYear}}</h3>
+                </div>
+            </div>
+            <div class="row" style="display: flex; align-items: center; justify-content: center;">
+                <table class="table" style="text-align: left;flex-direction: row; margin-left: 3vw; justify-content: center; align-items: center;">
+                    <tr>
+                      <td></td> 
+                      <th>Sun</th>
+                      <th>Mon</th>
+                      <th>Tue</th>
+                      <th>Wed</th>
+                      <th>Thu</th>
+                      <th>Fri</th>
+                      <th>Sat</th>
+                      <td></td> 
+                    </tr>
+                    <tr style="margin-bottom: 20px;">
+                      <td>
+                        <button style="border: none;" (click)="previousWeek()"><i  class="fas fa-chevron-left"></i></button>
+                      </td>
+                      <td *ngFor="let item of currentWeek; let i = index">
+                        <div [class]="'green-circle'" 
+                             (click)="toggleGreenCircle($event, i ,item)"
+                             [ngClass]="{ 'selected': selectedItemIndex === i }">
+                             {{item.getDate()}}
+                        </div>
+                      </td>
+                      <td>
+                        <button style="border: none;" (click)="advanceWeek()"><i class="fas fa-chevron-right"></i></button>
+                      </td>
+                    </tr>
+                  </table>
+                  
+            </div>
+            
+            <div *ngIf="events.length==0" class="row" style="margin-top: 3vh;display: flex;justify-content: center;">
+              <div class="card" style="width: 33vw;height: auto;background-color: #e7e7e7; ">
+                <div style="padding: 20px;">
+                  <div class="row" style="text-align: center;margin-top: 2vh;">
+                    <h3 class="pacifico-regular">No Events for today , Add a new one</h3>
+                  </div>
+                  <div class="row" style="display: flex; justify-content: center; gap: 2vw; margin-top: 5vh;">
+                    <div class="col-md-4 card" (click)="openWardobe()" data-bs-target="#modal1" data-bs-toggle="modal" style="background-color: lightskyblue; height: 40vh; width: 13vw; display: flex; justify-content: center; align-items: center; cursor: pointer;">
+                      <div style="text-align: center;">
+                        <img src="../assets/closett.png" style="width: 6vw;">
+                        <h5 style="margin-top: 20px;">Add from Wardrobe</h5>
+                      </div>
+                    </div>
+                    <div class="col-md-4 card" (click)="openStyling()" style="background-color: pink ; height: 40vh;width: 13vw;;display: flex;justify-content: center;align-items: center; cursor: pointer;">
+                      <div style="text-align: center;">
+                        <img src="../assets/remeraa.png" style="width: 7vw;">
+                        <h5 style="margin-top: 20px;">Create new Outfit</h5>
+                        </div>
+                    </div>
+                  </div>
+                  
+                                    
+                    
+                  </div>
+                  
+                </div>
+                
+              </div>
+              <div class="modal fade" #modal1 id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5 pacifico-regular" id="staticBackdropLabel">Outfits</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row d-flex justify-content-center" style="margin-top: 3vh; max-height: 30vw; overflow-y: auto;">
+                        <div class="col-md-5 card d-flex flex-column mb-3"  (mwlClick)="selectOutfit(prenda)" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" *ngFor="let prenda of Outfits" style="margin-left: 1vw; margin-right: 1vw;cursor: pointer;" (click)="selectOutfit(prenda)">
+                          <h5 class="pacifico-regular" style="display: flex; justify-content: start; align-items: center; padding-top: 1vh; font-size: large;">
+                            {{ prenda.nombre }}
+                          </h5>
+                          <div *ngIf="prenda.prendas.length > 3">
+                            <div class="outfit-grid"  >
+                              <div class="left-column" >
+                                <div *ngFor="let item of prenda.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'left-item': isLeftColumn(item.tipoPrenda.descripcion)}">
+                                  <img *ngIf="isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                                </div>
+                              </div>
+                              <div class="right-column" >
+                                <div *ngFor="let item of prenda.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'right-item': !isLeftColumn(item.tipoPrenda.descripcion)}">
+                                  <img *ngIf="!isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                                </div>
+                              </div>
+                            </div>
+                          </div>                              
+                          <div *ngIf="prenda.prendas.length <= 3">
+                            <div class="align-items-center" style="display: block; align-items: center;" >
+                              <div *ngFor="let item of prenda.prendas" style="display: flex; justify-content: center;">
+                                <div class="mb-2" style="width: 12vw; display: flex; justify-content: center;">
+                                  <img [src]="base64toImage(item.base64)" alt="" [style.height]="getImageHeight(item.tipoPrenda.descripcion)" style="width: auto; object-fit: cover;">
+                                </div>
+                              </div>
+                            </div>
+                            </div>                           
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Understood</button>
+                    </div>
+                  </div>
+                </div>
+            </div> 
+          <div *ngFor="let item of events">
+            <div *ngIf="events.length>0" class="row" style="margin-top: 3vh;display: flex;justify-content: center;">
+              <div class="card" style="width: 190vw;height: auto;background-color: #e7e7e7; ">
+                <h5 class="pacifico-regular" style="display: flex; justify-content: start; align-items: center; padding-top: 3vh; font-size: large; margin-left: 1vw;">
+                  {{ item.descripcion }} - {{ item.fecha }} - {{ item.horario }}
+                </h5>
+                <div class="card-body" style="margin-left: 1vw; margin-right: 1vw;">
+                  <div class="mb-3">
+                    <div *ngIf="item.outfitResponse.nombre" style="display: flex; justify-content: center;">
+                      <div class="col-md-8 card d-flex flex-column mb-3"   style="margin-left: 1vw; margin-right: 1vw;cursor: pointer;background-color: #e7e7e7;" >
+                        <h5 class="pacifico-regular" style="display: flex; justify-content: start; align-items: center; padding-top: 1vh; font-size: large; margin-left: 1vw;">
+                          {{ item.outfitResponse.nombre }}
+                        </h5>
+                        <div *ngIf="item.outfitResponse.prendas.length > 3">
+                          <div class="outfit-grid"  >
+                            <div class="left-column" >
+                              <div *ngFor="let item of item.outfitResponse.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'left-item': isLeftColumn(item.tipoPrenda.descripcion)}">
+                                <img *ngIf="isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                              </div>
+                            </div>
+                            <div class="right-column" >
+                              <div *ngFor="let item of item.outfitResponse.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'right-item': !isLeftColumn(item.tipoPrenda.descripcion)}">
+                                <img *ngIf="!isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                              </div>
+                            </div>
+                          </div>
+                        </div>                              
+                        <div *ngIf="item.outfitResponse.prendas.length <= 3">
+                          <div class="align-items-center" style="display: block; align-items: center;" >
+                            <div *ngFor="let item of item.outfitResponse.prendas" style="display: flex; justify-content: center;">
+                              <div class="mb-2" style="width: 12vw; display: flex; justify-content: center;">
+                                <img [src]="base64toImage(item.base64)" alt="" [style.height]="getImageHeight(item.tipoPrenda.descripcion)" style="width: auto; object-fit: cover;">
+                              </div>
+                            </div>
+                          </div>
+                        </div>  
+                                                
+                      </div>
+                      
+                    </div> 
+                    <div class="row" style="display: flex;justify-content: end;">
+                      <div class="col-md-2" style="gap: 1vw;">
+                        <i (click)="editEvent(item)" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style="cursor: pointer;margin: 1vh;" class="fas fa-pencil-alt"></i>
+                        <i (click)="deleteEvent(item)" style="cursor: pointer;" class="fas fa-trash-alt"></i>
+                      </div> 
+                    </div>         
+                  </div>
+                  
+                </div>
+              </div>
+            </div> 
+          </div>      
+        </div>
+        <div class="col-md-3">
+          <div style="display: flex; justify-content: center; align-items: center;margin-top: 7vh;">
+            <div class="modal fade" style="border-color: brown;" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                  <div style="padding: 1vh;">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Event</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="" [formGroup]="formEvent">
+                        <div class="mb-3">
+                          <label for="message-text" class="col-form-label">Description:</label>
+                          <input formControlName="descripcion" type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="mb-3">
+                          <label for="message-text" class="col-form-label">Date:</label>
+                          <input formControlName="fecha" type="date" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="mb-3">
+                          <label for="message-text" class="col-form-label">Time:</label>
+                          <input formControlName="horario" type="time" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="mb-3">
+                          <h3>Selected Outfit : {{this.OutfitSelected.nombre}} </h3>
+                          <div *ngIf="OutfitSelected.nombre" style="display: flex; justify-content: center;">
+                            <div class="col-md-5 card d-flex flex-column mb-3"   style="margin-left: 1vw; margin-right: 1vw;cursor: pointer;" >
+                              <h5 class="pacifico-regular" style="display: flex; justify-content: start; align-items: center; padding-top: 1vh; font-size: large; margin-left: 1vw;">
+                                {{ OutfitSelected.nombre }}
+                              </h5>
+                              <div *ngIf="OutfitSelected.prendas.length > 3">
+                                <div class="outfit-grid"  >
+                                  <div class="left-column" >
+                                    <div *ngFor="let item of OutfitSelected.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'left-item': isLeftColumn(item.tipoPrenda.descripcion)}">
+                                      <img *ngIf="isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                                    </div>
+                                  </div>
+                                  <div class="right-column" >
+                                    <div *ngFor="let item of OutfitSelected.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'right-item': !isLeftColumn(item.tipoPrenda.descripcion)}">
+                                      <img *ngIf="!isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>                              
+                              <div *ngIf="OutfitSelected.prendas.length <= 3">
+                                <div class="align-items-center" style="display: block; align-items: center;" >
+                                  <div *ngFor="let item of OutfitSelected.prendas" style="display: flex; justify-content: center;">
+                                    <div class="mb-2" style="width: 12vw; display: flex; justify-content: center;">
+                                      <img [src]="base64toImage(item.base64)" alt="" [style.height]="getImageHeight(item.tipoPrenda.descripcion)" style="width: auto; object-fit: cover;">
+                                    </div>
+                                  </div>
+                                </div>
+                                </div>                           
+                            </div>
+                          </div>
+                          <div *ngIf="OutfitSelected.nombre" style="display: flex; justify-content: end; align-items: center;">
+                            <button type="button" class="btn btn-danger" (click)="borrarOutfit()">Delete Outfit</button>
+                          </div>
+                          <div *ngIf="!OutfitSelected.nombre" style="display: flex; justify-content: end; align-items: center;">
+                            <button type="button" class="btn btn-primary" data-bs-target="#modal1" data-bs-toggle="modal" (click)="openWardobe()">Choose Outfit</button>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button *ngIf="!edition" type="button" class="btn btn-primary" data-bs-dismiss="modal"  [ngClass]="{ 'disabled': !formEvent.valid }" (click)="saveEvento()">Save Event</button>
+                          <button *ngIf="edition" type="button" class="btn btn-primary" data-bs-dismiss="modal"  [ngClass]="{ 'disabled': !formEvent.valid }" (click)="EditEvento()">Edit Event</button>
+                        </div>
+                      </form> 
+                    </div>
+                  </div>
+                  </div>
+              </div>
+            </div>
+            <button class="circle-btn" data-bs-target="#exampleModalToggle" (click)="resetForm()" data-bs-toggle="modal">+</button>
+          </div>
+        </div>
+    </div>
+    
+</div>

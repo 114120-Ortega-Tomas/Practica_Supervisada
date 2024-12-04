@@ -1,0 +1,30 @@
+h5{
+    cursor: pointer;
+}
+li{
+    font-size: 1vw;
+}
+nav
+{
+    background-color: #fdfbfb;
+    color:black;
+}
+.nav-link:active {
+    text-decoration: underline;
+  }
+  
+  
+a{
+    color:black;
+    text-decoration: none;
+}
+.pacifico-regular {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .fill{
+   max-width: 100%;
+   margin: 0 auto;
+  }

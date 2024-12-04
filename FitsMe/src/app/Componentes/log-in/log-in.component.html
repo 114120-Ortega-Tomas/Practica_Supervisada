@@ -1,0 +1,55 @@
+
+    <div class="container-wrapper" style="display: flex; ">
+        <div class="container">
+            <form action="" [formGroup]="login">
+            
+            <div class="row" >
+                
+                <div class="col-md-4" style="height: 90vh; background-color: rgb(31, 31, 31);box-shadow: 0 0 10px rgba(0, 0, 0, 0.6) ; z-index: 1;border-radius: 10px;">
+                    <div class="row">
+                        <div style="padding-top: 30%;">
+                            <div class="col-md-12" style="text-align: center;color: antiquewhite; font-weight: bold;font-size: 30px;text-decoration: underline;">
+                                Login
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="padding-left: 20px; padding-right: 20px;">
+                        <label for="login" style="color: white;">Email</label>
+                        <div style="position: relative;">
+                            <input type="text" class="single-line-input" id="login" name="login" required style="color: white;" 
+                            formControlName="email"
+                            ngClass="{ 'is-invalid': submitted && login.email.errors }">
+                        </div>
+                        
+                        <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="login.get('email')?.errors && submitted">The Email is required</div>
+                    </div>
+                    <div class="row" style="padding-left: 20px;padding-right: 20px;" >
+                        <label for="login" style="color: white;">Password</label>
+                        <div style="position: relative;">
+                            <input type="{{ ver ? 'password' : 'text' }}" class="single-line-input" id="password" name="password" required style="color: white; padding-right: 30px;" formControlName="password" ngClass="{ 'is-invalid': submitted && login.password.errors }">
+                            
+                            <i *ngIf="ver" (click)="seePassword()" class="fas fa-eye" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: white; cursor: pointer;"></i>
+                            <i *ngIf="ver==false" (click)="seePassword()" class="fas fa-eye-slash" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: white; cursor: pointer;"></i>
+
+                        </div>
+                        <div style="color: red;font-size: 12px; margin-top: 5px;" *ngIf="login.get('password')?.errors && submitted">You must enter a password</div>
+                    </div>
+                    <div class="row" style="margin-top: 20px;padding-left: 20px;padding-right: 20px;">
+                        <button type="submit" (click)="OnSubmit()" style="background-color: red; border-radius: 10px;">Log In</button>
+                    </div>
+                    <div class="row">
+                        <a routerLink="/register" style="color: white;text-decoration: underline; text-align: center;margin-top: 10px;">Don't have an account yet? Register</a>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+        </div>
+        
+        <img src="../assets/fondo.jpg" alt="" style="width: 100%; height: 90vh; object-fit: cover;">
+    </div>
+
+
+
+
+

@@ -1,0 +1,81 @@
+<div style="display: flex; flex-direction: row;">
+    <div class="col-md-2" style="background-color: #e7e7e7; height: 100vh; display: flex; flex-direction: column;">
+        <div class="row" style="padding-top: 20px; text-align: center;">
+            <div class="col-md-12">
+                <h2 class="pacifico-regular" style="margin-right: auto;">FITS ME</h2>
+            </div>
+        </div>
+        <div class="row" style="display: flex; justify-content: center;align-items: center;padding-top: 1vh;">
+            <div class="circle"  style="display: flex; justify-content: center;align-items: center;padding-top: 1vh;" >
+                <h1 style="color: black;font-size: 6vh;">{{user.username.charAt(0).toUpperCase()}}</h1>
+            </div>
+        </div>
+        <div class="row" style="display: flex; justify-content: center;padding-top: 10px;">
+            <h5 class="pacifico-regular" style="text-align: center;">{{user.username}}</h5>
+        </div>
+        <div class="row" style="text-align: left;padding-left: 2.2vw; font-size: larger;padding-top: 10vh;font-size: 4vh;">
+            <ul>
+                <li style="margin-bottom: 3vh;">
+                    <a  routerLink="calendar" [ngClass]="{ 'selected': selected === 0, 'normal': selected !== 0 }" (click)="style(items[0])">{{items[0]}}</a>
+                </li>            
+                <li style="margin-bottom: 3vh;">
+                    <a routerLink="styling"  [ngClass]="{ 'selected': selected === 1, 'normal': selected !== 1 }"  (click)="style(items[1]) ">{{items[1]}}</a>
+                </li >
+                <li style="margin-bottom: 3vh;">
+                    <a  routerLink="wardrobe" [ngClass]="{ 'selected': selected === 2, 'normal': selected !== 2 }" (click)="style(items[2])">{{items[2]}}</a>
+                </li>
+                <li style="margin-bottom: 3vh;">
+                    <a  routerLink="stats"  [ngClass]="{ 'selected': selected === 3, 'normal': selected !== 3 }"(click)="style(items[3])">{{items[3]}}</a>
+                </li>
+                <li style="margin-bottom: 3vh;">
+                    <a  routerLink="stats"  [ngClass]="{ 'selected': selected === 5, 'normal': selected !== 5 }"(click)="style(items[4])">{{items[4]}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row" style="margin-top: auto; text-align: left;padding-left: 2.2vw;">
+            <ul>
+                <li>
+                    <a routerLink="register" (click)="selected = 7" style="color: black;">Profile</a>
+                </li>
+                <li>
+                    <a routerLink="register" style="color: black;"  (click)="closeSession()">Close Session</a>
+                </li>
+                <li>
+                    <a style="color: black;cursor: pointer;text-decoration: underline;" (click)="selected = 6"  >Terms and Conditions</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+    <div class="col-md-10" style="overflow-y: auto; background-color: white;">
+        <div *ngIf="selected == 0" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-calendar></app-calendar>
+        </div>
+        <div *ngIf="selected == 1" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-styling></app-styling>
+        </div>
+        <div *ngIf="selected == 2" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-wardrobe></app-wardrobe>
+        </div>
+        <div *ngIf="selected == 3" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-stats></app-stats>
+        </div>
+        <div *ngIf="selected== 4" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-add-item></app-add-item>
+        </div>
+        <div *ngIf="selected== 5" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-friends></app-friends>
+        </div>
+        <div *ngIf="selected== 6" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-terms></app-terms>
+        </div>
+        <div *ngIf="selected== 7" style="max-height: calc(100vh - 20px); overflow-y: auto;">
+            <app-profile></app-profile>
+        </div>
+    </div>
+</div>
+
+
+   
+
+

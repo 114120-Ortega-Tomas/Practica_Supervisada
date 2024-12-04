@@ -1,0 +1,35 @@
+#drop-zone {
+    background-color: #d8d7d7;
+    border: 2px dashed #7a7a7a;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  .dropBox{
+    background-color: #d8d7d7;
+    border: 2px dashed #b4b2b2;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 3vh;
+    margin-left: 2vw;
+    
+  }
+
+  .custom-button {
+    color: black;
+    background-color: white;
+    border-color: black;
+    transition: background-color 0.3s; /* Agregar transición para suavizar el cambio de color */
+}
+
+.custom-button:hover {
+    background-color: green; /* Cambiar a verde cuando se hace hover */
+    color: white;
+}
+

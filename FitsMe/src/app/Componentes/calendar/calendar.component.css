@@ -1,0 +1,114 @@
+.green-circle {
+    border: 2px solid green;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle-btn {
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 3vw;
+    height: 3vw;
+    text-align: center;
+    font-size: 4vh;
+    
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(157, 235, 157);
+}
+
+.green-circle.clicked {
+    background-color: green;
+    color: white;
+}
+.today {
+    background-color: green;
+    color: white; /* Opcional: cambia el color del texto para que sea legible */
+}
+.selected {
+    background-color: green;
+    color: white; /* Opcional: cambia el color del texto para que sea legible */
+}
+
+  .prenda {
+    position: absolute;
+  }
+  
+  /* Ejemplos de posiciones explícitas */
+  .prenda-0 {
+    bottom: 18vh;
+    left: 14vw;
+  }
+  
+  .prenda-1 {
+    top: 13vh;
+    left: 14vw;
+  }
+  
+  .prenda-2 {
+    top: 23vh;
+    left: 14vw;
+  }
+  .prenda-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 35vh;
+  }
+  
+  .prenda-row {
+    display: flex;
+    width: 100%;
+  }
+  
+  .prenda {
+    flex: 1 1 50%; /* Ocupa el 50% del ancho del contenedor */
+    box-sizing: border-box; /* Asegura que el padding y border se incluyan en el ancho */
+    padding: 10px; /* Espacio entre los elementos */
+  }
+  
+  .prenda img {
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho de su contenedor */
+    height: auto;
+  }
+  
+  
+  
+  
+  .pacifico-regular {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3vh;
+  }
+
+  
+  .outfit-grid {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .left-column, .right-column {
+    width: 48%; /* Ajusta el ancho según tus necesidades */
+  }
+  
+ 
+  
+  .left-item img, .right-item img {
+    width: auto;
+    object-fit: cover;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .left-column, .right-column {
+      width: auto;
+    }
+  }
+  

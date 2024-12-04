@@ -1,0 +1,220 @@
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <h3 class="pacifico-regular1" style="text-align: center;padding-top: 1vh;">Find your friends and get Inspired by them</h3>
+        </div>
+    </div>
+    
+    <div class="row mt-3 justify-content-center">
+        <form class="d-flex " style="justify-content: center;" action="" [formGroup]="form">
+            <div class="col-md-7"> 
+                <label for="search" class="visually-hidden">Search</label>
+                <input type="text" id="search" class="form-control" placeholder="Search for friends" formControlName="search">
+            </div>
+            <div class="col-md-1">
+                <button  (click)="getUsername(form.value.search)" class="btn btn-primary ms-2">
+                    <i style="width: 4vh;" class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+            <div class="col-md-1" data-bs-target="#modal1" data-bs-toggle="modal">
+                <button style="border: solid black 1px;" (click)="getAmigos()"  class="btn  ms-2">
+                    <i class="fa-solid fa-users" ></i>
+                </button>
+            </div>
+            <div class="col-md-1" data-bs-target="#modal3" data-bs-toggle="modal">
+                <button style="border: solid black 1px; position: relative;" (click)="getSolicitudes()" class="btn ms-2">
+                    <i class="fa-solid fa-user"></i>
+                    <span *ngIf="solicitudes && solicitudes.length > 0" 
+                          style="position: absolute; top: 0; right: 0; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
+                    </span>
+                </button>
+            </div>
+            <div class="col-md-1" data-bs-target="#modal5" data-bs-toggle="modal">
+                <button style="border: solid black 1px; position: relative;" (click)="getSolicitudesPrendas()" class="btn ms-2">
+                    <i class="fa-solid fa-right-left"></i>
+                    <span *ngIf=" solicitudesPrendas && solicitudesPrendas.length > 0" 
+                          style="position: absolute; top: 0; right: 0; width: 10px; height: 10px; background-color: red; border-radius: 50%;">
+                    </span>
+                </button>
+            </div>            
+        </form>
+    </div> 
+    <div class="modal fade" #modal1 id="modal1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 pacifico-regular" id="staticBackdropLabel">Friends</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead style="text-align: center;">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Wardobe</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        <tr *ngFor="let amigo of amigos">
+                            <th scope="row">{{amigo.id}}</th>
+                            <td>{{amigo.nombre}}</td>
+                            <td>{{amigo.username}}</td>
+                            <td data-bs-target="#modal2" data-bs-toggle="modal">
+                                <button (click)="getPrendas(amigo.id , amigo.username)"  class="btn" style="border: solid black 1px;">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" #modal3 id="modal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 pacifico-regular" id="staticBackdropLabel">Friend Requests</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead style="text-align: center;">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Accept</th>
+                            <th scope="col">Reject</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        <tr *ngFor="let request of solicitudes">
+                            <th scope="row">{{request.userIdFrom}}</th>
+                            <td>{{request.usernameFrom}}</td>
+                            <td data-bs-dismiss="modal" data-bs-target="#modal3">
+                                <button (click)="acceptSolicitud(request.solicitudId)" class="btn" style="border: solid black 1px;background-color: lightgreen;">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                        </td>
+                            <td data-bs-dismiss="modal" data-bs-target="#modal3">
+                                <button (click)="rejectSolicitud(request.solicitudId)" class="btn" style="border: solid black 1px;background-color: red;">
+                                    <i  class="fa-solid fa-xmark"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" #modal5 id="modal5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 pacifico-regular" id="staticBackdropLabel">Item Requests</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover">
+                    <thead style="text-align: center;">
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Accept</th>
+                            <th scope="col">Reject</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        <tr *ngFor="let request of solicitudesPrendas">
+                            <th scope="row">{{request.userIdFrom}}</th>
+                            <td>{{request.usernameFrom}}</td>
+                            <td>{{request.prenda.descripcion}}</td>
+                            <td data-bs-dismiss="modal" data-bs-target="#modal3">
+                                <button (click)="AcceptSolicitudPrenda(request.solicitudId)" class="btn" style="border: solid black 1px;background-color: lightgreen;">
+                                    <i class="fa-solid fa-check"></i>
+                                </button>
+                        </td>
+                            <td data-bs-dismiss="modal" data-bs-target="#modal3">
+                                <button (click)="RejectSolicitudPrenda(request.solicitudId)" class="btn" style="border: solid black 1px;background-color: red;">
+                                    <i  class="fa-solid fa-xmark"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                
+            </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>              
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="modal fade" #modal2 id="modal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 pacifico-regular" id="staticBackdropLabel">{{amigoWardrobe}}'s Wardrobe</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 200px);">
+                    <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1vh;">
+                        <div class="card" *ngFor="let prenda of prendas" style="flex: 0 0 24%; margin: 1vh; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div class="row" style="justify-content: center;">
+                                <div class="mb-2" style="width: 100%; display: flex; justify-content: center; padding: 1vh; row-gap: 1vh;">
+                                    <img [src]="base64toImage(prenda.base64)" alt="" [style.height]="getImageHeight(prenda.tipoPrenda.descripcion)" style="width: auto; object-fit: cover;">
+                                </div>
+                            </div>
+                            <div class="row mb-2" style="margin-top: auto;">
+                                <div  style="display: flex; justify-content: center; width: 100%;">
+                                    <button (click)="sendSolicitudPrenda(prenda.prendaId)" style="text-align: center; padding: 1vh;"  class="btn btn-primary" >Ask For It</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                   
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div class="row" style="margin-top: 7vh;">
+        <div class="col-md-2" *ngFor="let user of users">
+            <div class="card" >
+                <div class="row" style="display: flex;justify-content: center;">
+                    <div class="circle"  style="display: flex; justify-content: center;align-items: center;padding-top: 1vh;margin-top: 1vh;" >
+                        <h1 style="color: black;font-size: 6vh;">{{user.username.charAt(0).toUpperCase()}}</h1>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title pacifico-regular" style="text-align: center;">{{user.username}}</h5>
+                </div>
+                <div class="col-md-12" style="display: flex;justify-content: center;margin-bottom: 1vh  ;">
+                    <div *ngIf="user.amigos" data-bs-target="#modal2" data-bs-toggle="modal">
+                        <button class="btn btn-primary" (click)="getPrendas(user.id,user.username)" > See Wardrobe</button>
+                    </div>
+                    <div *ngIf="!user.amigos">
+                        <button class="btn btn-primary" (click)="sendSolicitud(user.id)" > Add Friend</button>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>

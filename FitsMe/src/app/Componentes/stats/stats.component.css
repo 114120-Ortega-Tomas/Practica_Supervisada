@@ -1,0 +1,29 @@
+.pacifico-regular {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 3vh;
+  }
+
+  .left-column, .right-column {
+    width: 48%; /* Ajusta el ancho según tus necesidades */
+  }
+  
+ 
+  
+  .left-item img, .right-item img {
+    width: auto;
+    object-fit: cover;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .left-column, .right-column {
+      width: auto;
+    }
+  }
+
+  .outfit-grid {
+    display: flex;
+    justify-content: space-between;
+  }
+  

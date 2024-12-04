@@ -1,0 +1,104 @@
+<div class="container">
+    <h1 class="pacifico-regular" style="margin-top: 5vh;">Add Item</h1>
+    <form [formGroup]="formaddItem">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <label for="descripcion" class="form-label">Description</label>
+                        <input type="text" formControlName="descripcion" placeholder="Description" class="form-control">
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <label for="color" class="form-label">Color</label>
+                        <ng-multiselect-dropdown 
+                            [settings]="dropdownSettingsColors" 
+                            id="color" 
+                            formControlName="color" 
+                            [data]="colores" 
+                            [placeholder]="'Select the Color/s that suits the best'">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="tipoPrenda" class="form-label">Type</label>
+                        <ng-multiselect-dropdown 
+                            [data]="tiposPrendas" 
+                            [placeholder]="'Select the Type that suits the best'" 
+                            [settings]="dropdownSettingsTipoPrenda" 
+                            id="tipoPrenda" 
+                            formControlName="tipoPrenda">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="clima" class="form-label">Climate</label>
+                        <ng-multiselect-dropdown 
+                            [data]="climas" 
+                            [placeholder]="'Select the Climate/s that suits the best'" 
+                            [settings]="dropdownSettingsClima" 
+                            id="clima" 
+                            formControlName="clima">
+                        </ng-multiselect-dropdown>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="estilo" class="form-label">Style</label>
+                        <ng-multiselect-dropdown 
+                            [data]="estilos" 
+                            [placeholder]="'Select the Style/s that suits the best'" 
+                            [settings]="dropdownSettingsEstilos" 
+                            id="estilo" 
+                            formControlName="estilo">
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="row">
+                    <div id="drop-zone" (click)="openFileExplorer()" (dragover)="onDragOver($event)" (drop)="onDrop($event)" style="margin-top: 10px;">
+                        <div class="upload-icon">
+                            <img style="height: 50px" src="/assets/file.png" alt="">
+                        </div> 
+                        <div *ngFor="let file of PrendaFile">
+                            <span style="vertical-align: middle;">{{ file.name }}</span>
+                            <button (click)="removeFile($event,file)" style="background-color: red; border: 1px solid red; margin-left: 10px; margin-top: 10px;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>                      
+                        <input type="file" #fileInput id="fileInput" (change)="onFilesSelected($event)" accept=".jpeg,.jpg,.png" style="display: none;">
+                        <p *ngIf="!hasfile" style="margin-top: 1vh;">Drag your Files here or click to select them.</p>
+                    </div>
+                </div>
+                <div class="row " >
+                    <div class="col-md-12">
+                        <div class="form-check" style="margin-top: 3vh;margin-left: 3vw;">
+                            <input class="form-check-input" style="height: 2vh;width: 1vw;" type="checkbox" id="shareCheckbox" formControlName="share" formControlName="private" >
+                            <label class="form-check-label" style="font-size: larger;margin-top: 0.5vh;margin-left: 1vw;" for="shareCheckbox">Keep your Item private?</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <button (click)="SaveorUpdate()" class="btn custom-button" style="width: 100%;">Save Item</button>
+    <h1 style="margin-top: 3vh; text-decoration: underline;">Basic Items you can't miss</h1>
+    <div class="row" style="margin-top: 3vh; max-height: 20vw; overflow-y: auto;">
+        <div class="col-md-3" *ngFor="let prenda of Prendas">
+            <div class="card mb-2" style="width: 12vw;">
+                <img [src]="base64toImage(prenda.base64)" alt="" class="card-img-top" style="width: auto; height: 12vw; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ prenda.descripcion }}</h5>
+                    <div class="row">
+                        <button class="btn btn-primary" (click)="addPrenda(prenda)">Add Item</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4" style="display: flex; justify-content: end; align-items: center">
+        <div class="col-md-3" style="display: flex; justify-content: end; align-items: center" >
+            <button class="btn " style="border: red; background-color: brown;" (click)="return()" > Return </button>
+        </div>
+    </div>
+</div>

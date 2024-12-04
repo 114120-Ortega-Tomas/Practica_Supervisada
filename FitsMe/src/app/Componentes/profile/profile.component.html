@@ -1,0 +1,59 @@
+<div class="container-wrapper" style="display: flex; background-color:  white;justify-content: center;align-items: center;">
+   
+    <div class="container " >
+        <div class="row" style="display: flex; justify-content: center;align-items: center;padding-top: 1vh;">
+            <div class="circle"  style="display: flex; justify-content: center;align-items: center;padding-top: 1vh;" >
+                <h1 style="color: black;font-size: 6vh;">{{user.username.charAt(0).toUpperCase()}}</h1>
+            </div>
+        </div>
+        <form action="" [formGroup]="form">
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <label for="username">Username</label>
+                <input formControlName="username" type="text" class="form-control single-line-input" id="username">
+            </div>
+        </div>
+        <div class="row mb-3" > 
+            <div class="col-md-6">
+                <label for="email">Email</label>
+                <input formControlName="email" type="text" class="form-control single-line-input" id="email">
+            </div>
+            <div class="col-md-6">
+                <label for="password">Password</label>
+                <div style="position: relative;">
+                    <input type="{{ ver ? 'password' : 'text' }}" class="single-line-input" id="password" name="password" required style="padding-right: 30px;" formControlName="password" ngClass="{ 'is-invalid': submitted && login.password.errors }">
+                    
+                    <i *ngIf="ver" (click)="seePassword()" class="fas fa-eye" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: black; cursor: pointer;"></i>
+                    <i *ngIf="ver==false" (click)="seePassword()" class="fas fa-eye-slash" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: black; cursor: pointer;"></i>
+
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="name">First Name</label>
+                <input formControlName="name" type="text" class="form-control single-line-input" id="name">
+            </div>
+            <div class="col-md-6">
+                <label for="surname">Last Name</label>
+                <input formControlName="lastname" type="text" class="form-control single-line-input" id="lastname">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="country">Country</label>
+                <input formControlName="country" type="text" class="form-control single-line-input" id="country">
+            </div>
+            <div class="col-md-6">
+                <label for="nac">Date of Birth</label>
+                <input formControlName="nac" type="date" class="form-control single-line-input" id="nac">
+            </div>
+        </div>
+        <div class="row" style="display: flex;justify-content: end;align-items: center;">
+            <div class="col-md-3 mt-3" style="display: flex; justify-content:end;">
+                <button class="btn" (click)="UpdateUser()" style="border: darkgreen solid;background-color: lightgreen;">Save Information</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>

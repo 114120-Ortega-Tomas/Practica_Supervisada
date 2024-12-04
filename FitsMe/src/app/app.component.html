@@ -1,0 +1,24 @@
+<div *ngIf="loggedIn==false">
+  <div class="navbar navbar-expand-md justify-content-between" style="background-color: #e7e7e7;">
+    <div class="container-fluid">
+      <div class="navbar-brand" style="margin-left: 3vw; ">
+        <h2 class="pacifico-regular"><a routerLink="">FITS <br> ME</a></h2>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse " style="padding-left: 40px; gap: 10px;" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="how">How it Works</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="login">Log In / Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

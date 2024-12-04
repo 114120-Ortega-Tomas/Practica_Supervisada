@@ -1,0 +1,288 @@
+<div class="container" style="padding-top: 2vw;" *ngIf="!addItem">
+  <!-- Modal de carga -->
+  <div *ngIf="isLoading" class="loading-modal">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+    <div class="row">
+        <div  >
+            <h3 class="pacifico-regular" style="text-align: center;padding-top: 1vh;">{{user}}'s Wardrobe</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div style="padding-top: 2vh;">
+            <div class="row" style="gap: 0.8vw;display: flex;align-items: center;">
+                <div class="col-md-1" style="display: flex; justify-content: center;">
+                    <div class="card" style="border: none;">
+                      <div class="prendas mb-2 plus" 
+                           [ngClass]="{'selected': selectedType === 'all'}" 
+                           (click)="selectType('all'); getPrendas()">
+                        <img src="../assets/armario.png" alt="" style="width:2.8vw;">
+                      </div>
+                      <h5 style="text-align: center; font-size: 0.7vw;">All</h5>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-1" style="display: flex; justify-content: center;">
+                    <div class="card" style="border: none;">
+                      <div class="prendas mb-2 plus" 
+                           [ngClass]="{'selected': selectedType === 'tops'}" 
+                           (click)="selectType('tops'); getTops()">
+                        <i class="fas fa-tshirt"></i>
+                      </div>
+                      <h5 style="text-align: center; font-size: 0.7vw;">Tops</h5>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-1" style="display: flex; justify-content: center;">
+                    <div class="card" style="border: none;">
+                      <div class="prendas mb-2 plus" 
+                           [ngClass]="{'selected': selectedType === 'bottoms'}" 
+                           (click)="selectType('bottoms'); getBottoms()">
+                        <img src="../assets/pantalones.png" alt="" style="width:2.3vw;">
+                      </div>
+                      <h5 style="text-align: center; font-size: 0.7vw;">Bottoms</h5>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-1" style="display: flex; justify-content: center;">
+                    <div class="card" style="border: none;">
+                      <div class="prendas mb-2 plus" 
+                           [ngClass]="{'selected': selectedType === 'footwear'}" 
+                           (click)="selectType('footwear'); getFootWear()">
+                        <i class="fas fa-shoe-prints"></i>
+                      </div>
+                      <h5 style="text-align: center; font-size: 0.7vw;">Footwear</h5>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-1" style="display: flex; justify-content: center;">
+                    <div class="card" style="border: none;">
+                      <div class="prendas mb-2 plus" 
+                           [ngClass]="{'selected': selectedType === 'accessories'}" 
+                           (click)="selectType('accessories'); getAccesories()">
+                        <img src="../assets/lentes.png" alt="" style="width:3.3vw;">
+                      </div>
+                      <h5 style="text-align: center; font-size: 0.7vw;">Accessories</h5>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-1" style="display: flex; justify-content: center;">
+                    <div class="card" style="border: none;">
+                      <div class="prendas mb-2 plus" 
+                           [ngClass]="{'selected': selectedType === 'outerwear'}" 
+                           (click)="selectType('outerwear'); getOutWear()">
+                        <img src="../assets/abrigo.png" alt="" style="width:3vw;">
+                      </div>
+                      <h5 style="text-align: center; font-size: 0.7vw;">Outerwear</h5>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-1" style="display: flex; justify-content: center;">
+                    <div class="card" style="border: none;">
+                      <div class="prendas mb-2 plus" 
+                           [ngClass]="{'selected': selectedType === 'outfits'}" 
+                           (click)="selectType('outfits'); getOutfits()">
+                        <img src="../assets/icono outfit.png" alt="" style="width:2.8vw;">
+                      </div>
+                      <h5 style="text-align: center; font-size: 0.7vw;">Outfits</h5>
+                    </div>
+                  </div> 
+                    <div class="col-md-3" style="padding-bottom: 3.5vh; display: flex;justify-content: end;">
+                        <div class="d-flex" style="gap: 1vw;">
+                            <button [ngClass]="{'corazon': corazon}"  (click)="changeCorazon()" class="form-control" style="border-radius: 5px;width: auto;">
+                                <i  class="fas fa-heart"></i>
+                            </button>
+                            <button data-bs-target="#exampleModal" data-bs-toggle="modal"  class="form-control" style="background-color: white;border-radius: 5px;width: 4vw;">
+                                <img src="../assets/filter.png" alt="" style="width: 2vw;">
+                            </button>
+                        </div>
+                    </div>                    
+                
+            </div>
+            
+        </div>
+        
+    </div>
+    <div class="row mb-3" >
+        <div style="display: flex;justify-content: end;align-content: center;">
+            <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div style="padding: 1vh;text-align: center;">
+                    <button style="border: none;text-align: center;" class="btn col-md-12 plus" (click)="cambiar()" data-bs-toggle="modal" >Add Items</button>
+                    <button style="border: none;text-align: center;" class="btn col-md-12 plus" (click)="cambiarOutfit()" data-bs-toggle="modal" >Create Outfit</button>
+                    </div>
+                    </div>
+                </div>
+              </div>
+              <button class="circle-btn" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">+</button>
+        </div>
+    </div>
+        <div *ngIf="Outfits.length == 0" class="row mb-2">
+            <div class="col-md-3"  *ngFor="let prenda of Prendas">
+              <div class="card mb-3" [ngClass]="prenda.prestada ? 'prestada' : 'no-prestada'" style="width: 14vw;">
+                <div class="row">
+                   
+                    <div *ngIf="prenda.favorito" style="display: flex;justify-content: end;align-items: center;padding-top: 1vh;padding-right: 2vw;">
+                        <div class="col-md-1" >
+                            <i  (click)="setPrendaFavorite(prenda)"style="cursor: pointer;" class="fas fa-heart red"></i>
+                        </div>
+                    </div>
+                    <div *ngIf="!prenda.favorito" style="display: flex;justify-content: end;align-items: center;padding-top: 1vh;padding-right: 2vw;">
+                        <div class="col-md-1" >
+                            <i  (click)="setPrendaFavorite(prenda)" style="cursor: pointer;" class="fa-regular fa-heart "></i>
+                        </div>
+                    </div>
+                 
+                </div>
+                <img [src]="base64toImage(prenda.base64)" alt=""  class="card-img-top" style="width: auto; height: 12vw; object-fit: cover;" loading="lazy">
+                <div class="card-body">
+                    <div class="row">
+                        <div *ngIf="prenda.prestada" class="col-md-7">
+                            <h5 class="card-title" style="color: red;">Item Lend Out</h5>
+                        </div>
+                        <div *ngIf="!prenda.prestada" class="col-md-7">
+                            <h5 class="card-title">{{ prenda.descripcion.toUpperCase() }}</h5>
+                        </div>
+                        <div *ngIf="!prenda.prestamo" class="col-md-5" style="display: flex;justify-content: end;gap: 0.5vw;">
+                            <i (click)="EditPrenda(prenda)" style="cursor: pointer;" class="fas fa-pencil-alt"></i>
+                            <i (click)="deletePrenda(prenda)" style="cursor: pointer;" class="fas fa-trash-alt"></i>
+                        </div>
+                        <div *ngIf="prenda.prestamo" class="col-md-5" style="display: flex;justify-content: end;gap: 0.5vw;">
+                            <button (click)="DevolverPrenda(prenda.prendaId , prenda.prestadabyUserId)" class="btn btn-danger" style="border-radius: 5px;font-size: small;">
+                                Return 
+                            </button>
+                        </div>
+                    </div>
+                   
+                </div>
+              </div>
+            </div>
+        </div>
+        <div *ngIf="Outfits.length != 0" class="row mb-2">
+            <div class="col-md-3" *ngFor="let item of Outfits">
+              <div class="card mb-3"  style="width: auto;height: auto;">
+                <div class="row" style="display: flex;justify-content: end;">
+                    <div class="row" style="margin-right: 1vw;">
+                        <div *ngIf="item.favorito">
+                            <i (click)="setOutfitFavorite(item.id)" style="cursor: pointer; display: flex;justify-content: end;align-items: center;padding-top: 1vh;" class="fas fa-heart red"></i>
+                        </div>
+                        <div *ngIf="!item.favorito">
+                            <i  (click)="setOutfitFavorite(item.id)" style="cursor: pointer; display: flex;justify-content: end;align-items: center;padding-top: 1vh;" class="fa-regular fa-heart"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3" >
+                    <div *ngIf="item.prendas.length > 3">
+                        <div class="outfit-grid"  >
+                          <div class="left-column" >
+                            <div *ngFor="let item of item.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'left-item': isLeftColumn(item.tipoPrenda.descripcion)}">
+                              <img *ngIf="isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                            </div>
+                          </div>
+                          <div class="right-column" >
+                            <div *ngFor="let item of item.prendas" style="display: flex; justify-content: center;" [ngClass]="{ 'right-item': !isLeftColumn(item.tipoPrenda.descripcion)}">
+                              <img *ngIf="!isLeftColumn(item.tipoPrenda.descripcion)" [src]="base64toImage(item.base64)"  [style.height]="getImageHeight(item.tipoPrenda.descripcion)" >
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div *ngIf="item.prendas.length <= 3">
+                        <div class="align-items-center" style="display: block; align-items: center;" >
+                          <div *ngFor="let item of item.prendas" style="display: flex; justify-content: center;">
+                            <div class="mb-2" style="width: 12vw; display: flex; justify-content: center;">
+                              <img [src]="base64toImage(item.base64)" alt="" [style.height]="getImageHeight(item.tipoPrenda.descripcion)" style="width: auto; object-fit: cover;">
+                            </div>
+                          </div>
+                        </div>
+                      </div> 
+                </div>
+                <div class="card-body">
+                    
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h5 class="card-title">{{ item.nombre.toUpperCase() }}</h5>
+                        </div>
+                        
+                        <div class="col-md-1"  style="display: flex;justify-content: end;">
+                            <i style="cursor: pointer" (click)="deleteOutfit(item.id)" class="fas fa-trash-alt"></i>
+                        </div>
+                    </div>                   
+                </div>
+              </div>
+            </div>
+        </div>
+        
+        <div class="row" >
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header" >
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Filters</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="formFilter">
+                      <div class="row mb-2">
+                        <div class="col-md-12">
+                          <label for="clima" class="form-label">What Climate are you looking for?</label>
+                                <ng-multiselect-dropdown 
+                                    [data]="climas" 
+                                    [placeholder]="'Select the Climate/s that suits the best'" 
+                                    [settings]="dropdownSettingsClima" 
+                                    id="clima" 
+                                    formControlName="clima">
+                                </ng-multiselect-dropdown>
+                        </div>
+                      </div>
+                      <div class="row mb-2" >
+                        <div class="col-md-12">
+                          <label for="estilo" class="form-label">What Styles do you prefer?</label>
+                                <ng-multiselect-dropdown 
+                                    [data]="estilos" 
+                                    [placeholder]="'Select the Style/s that suits the best'" 
+                                    [settings]="dropdownSettingsEstilos" 
+                                    id="estilo" 
+                                    formControlName="estilo">
+                                </ng-multiselect-dropdown>
+                        </div>
+                      </div>
+                      <div class="row mb-2">
+                        <div class="col-md-12">
+                          <label for="color" class="form-label">What Colors do you prefer?</label>
+                          <ng-multiselect-dropdown 
+                                    [settings]="dropdownSettingsColors" 
+                                    id="color" 
+                                    formControlName="color" 
+                                    [data]="colores" 
+                                    [placeholder]="'Select the Color/s that suits the best'">
+                                </ng-multiselect-dropdown>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="armaryAplicarFiltros()" data-bs-dismiss="modal">Apply Filters</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+</div>
+<!-- <div *ngIf="!addItem">
+    <app-add-item></app-add-item>
+    <div class="container">
+        <div class="row" style="display: flex;justify-content: end;align-items: center; margin-top: 4vh;">
+            <div class="col-md-2" style="margin-left: 4vw;">
+                <button class="btn" style="color: white;background-color: red;border-color: brown;width: 100%;" (click)="getPrendas()">RETURN</button>
+            </div>
+            
+        </div>
+    </div>
+</div> -->
+
+    
+    

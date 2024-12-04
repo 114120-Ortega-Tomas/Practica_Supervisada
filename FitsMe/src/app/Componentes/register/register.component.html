@@ -1,0 +1,102 @@
+
+<div class="main-container" style="padding: 10px;">
+    <div class="container" style="width: 60vw; border: 1px solid black;border-radius: 10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3) ;margin-top: 10vh;margin-bottom: 5vh;z-index: 1;">
+        <div class="row" style="padding: 20px;">
+            <div class="row" style="display: flex; align-items: center;">
+                <div class="col-md-6">
+                    <h2 class="pacifico-regular" style="margin-right: auto;">FITS ME</h2>
+                </div>
+            </div>                      
+            
+            <div class="col-md-8" style="padding:10px;" >
+                <form action="" [formGroup]="form" >
+                    <div class="row mb-2">
+                        <div class="col-md-12">
+                            <label for="email">Email</label>
+                            <input type="email" class="single-line-input" name="email" id="email" formControlName="email">
+                            <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="form.get('email')?.errors && submitted">The Email is required</div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-12">
+                            <label for="password">Password</label>
+                            <div style="position: relative;">
+                                <input type="{{ ver ? 'password' : 'text' }}" class="single-line-input" name="password" id="password" formControlName="password">
+
+                                <i *ngIf="ver" (click)="seePassword()" class="fas fa-eye" style="position: absolute; right: 10px; top: 30%; transform: translateY(-50%); color: black; cursor: pointer;"></i>
+                                <i *ngIf="ver==false" (click)="seePassword()" class="fas fa-eye-slash" style="position: absolute; right: 10px; top: 30%; transform: translateY(-50%); color: black; cursor: pointer;"></i>
+                                <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="form.get('password')?.errors && submitted">The password is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-12">
+                            <label for="username">Username</label>
+                            <input type="text" class="single-line-input" name="username" id="username" formControlName="username">
+                            <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="form.get('username')?.errors && submitted">The Username is required</div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label for="name">First Name</label>
+                            <input type="text" class="single-line-input" name="name" id="name" formControlName="name">
+                            <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="form.get('name')?.errors && submitted">The First Name is required</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" class="single-line-input" name="lastname" id="lastname" formControlName="lastname">
+                            <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="form.get('lastname')?.errors && submitted">The Last Name is required</div>
+                        </div>
+                    </div>  
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label for="fecNac">Date of Birth</label>
+                            <input type="date" class="single-line-input" name="fecNac" id="fecNac" formControlName="fecNac">
+                            <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="form.get('fecNac')?.errors && submitted">The date of Birth is required</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="country">Country</label>
+                            <select name="country" class="single-line-input" id="country" formControlName="country">
+                                <option *ngFor="let country of paises_americas" [value]="country">{{country}}</option>
+                            </select>
+                            <div style="color: red;font-size: 12px;margin-top: 5px;" *ngIf="form.get('country')?.errors && submitted">The Country is required</div>
+                        </div>
+                       
+                    </div>
+                    <div class="row mt-4" >
+                        <div class="col-md-1">
+                            <input type="checkbox" id="terms" formControlName="terms">
+                        </div>
+                        <div class="col-md-6" style="text-align: left;margin-bottom: 1vh">
+                            <label style="margin-bottom: 1vh;" for="terms">Accept the terms and conditions</label>
+                        </div>
+                        <div class="col-md-5" style="text-align: left;margin-bottom: 1vh">
+                            <div >
+                                <p style="color: black;"><a style="color: black;" href="terms">View Terms and Conditions</a></p>
+                            </div>                            
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="row mt-2" style="display: flex; justify-content: center; align-items: center; padding: 10px;">
+                        <button class="btn" (click)="OnSubmit()" style="background-color: red;color: white; border: 1px solid black;" type="submit">Registrarse</button>      
+                    </div>
+                          
+                </form>
+            </div>
+            
+        </div>
+        
+    </div>
+    <img src="../assets/fondo.jpg" alt="" style="width: 100%; height: 90vh; object-fit: cover;">
+    
+</div>
+
+    
+    
+    
+    
+   
+   
+
+

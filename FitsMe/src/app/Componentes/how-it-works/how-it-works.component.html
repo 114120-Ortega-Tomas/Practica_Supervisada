@@ -1,0 +1,43 @@
+<div class="container-wrapper">
+    <div class="container">
+        <div class="header-section">
+            <h1 class="title">How it works</h1>
+        </div>
+        
+        <div class="content-section row">
+            <div class="col-md-8">
+                <h2 class="subtitle">Get Started with Fits Me</h2>
+                <ul class="steps-list">
+                    <li><strong>1. Add Items to your closet</strong> - Upload your clothes to your digital wardrobe or import images from our database.</li>
+                    <li><strong>2. Start Styling</strong> - Shuffle your wardrobe to unlock new outfit combinations.</li>
+                    <li><strong>3. Create unlimited outfits</strong> - Use the Style Section to filter and add items to your closet.</li>
+                    <li><strong>4. Get organized</strong> - Plan outfits ahead with the Calendar, create packing lists, and more.</li>
+                    <li><strong>5. See your style in a new light</strong> - View usage stats to shop smarter in the future.</li>
+                    <li><strong>6. Get Inspired by Your Friends</strong> - Discover your friends' wardrobe to expand your collection.</li>
+                </ul>
+            </div>
+            
+            <div class="col-md-4 image-container">
+                <img src="../assets/calendar.png" alt="Calendar" class="calendar-image">
+                <img src="../assets/armarioo.png" alt="Wardrobe" class="wardrobe-image">
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <h2 class="subtitle">Frequently Asked Questions</h2>
+            <div class="accordion-container">
+                <div *ngFor="let question of faqQuestions; let i = index" class="accordion-item">
+                    <button class="accordion-button"
+                            [ngClass]="{'active': activeIndex === i}"
+                            (click)="toggleAccordion(i)">
+                        {{ question.title }}
+                    </button>
+                    <div class="accordion-content" *ngIf="activeIndex === i">
+                        <p>{{ question.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
